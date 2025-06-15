@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
 public class App {
 
     public static void main(String[] args) {
-        
+        //Test commit added by John
         
         SwingUtilities.invokeLater(() -> {
            new GUI(); 
