@@ -34,7 +34,7 @@ public class GUI extends JFrame {
     public GUI() {
         
         
-        
+        //mising commits
         board = new Board();
         playersetup = new PlayerSetup();
         
