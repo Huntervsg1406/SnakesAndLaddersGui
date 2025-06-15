@@ -53,18 +53,24 @@ public class Board {
         
         if(newPosition > 100){
             newPosition = 100 - (newPosition -100);
+
+            playerVerbose = "Rolled a "+diceRoll+" and over shot! You are now on "+newPosition;
         }
-        
+
+        if (newPosition == 100) {
+            player.setPosition(100);
+            playerVerbose = "Rolled a "+diceRoll+" and over shot! You are now on "+newPosition;
+        }
         //check for da snake or ladder and output final position
         int finalPosition = board.get(newPosition);
         
         if(finalPosition > newPosition){
-            System.out.println(player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition+diceRoll)+"\nClimbing a ladder to " + finalPosition+"\n");
-            playerVerbose = player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition+diceRoll)+", Climbing a ladder to " + finalPosition+"\n";
+            System.out.println(player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition)+"\nClimbing a ladder to " + finalPosition+"\n");
+            playerVerbose = player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition)+", Climbing a ladder to " + finalPosition+"\n";
         }
         else if(finalPosition < newPosition){
-            System.out.println(player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition+diceRoll)+"\nFalling down a snake to " + finalPosition+"\n");
-            playerVerbose = player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition+diceRoll)+", Falling down a snake to " + finalPosition+"\n";
+            System.out.println(player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition)+"\nFalling down a snake to " + finalPosition+"\n");
+            playerVerbose = player+ " Rolled a " +  diceRoll + " and landed on " + (newPosition)+", Falling down a snake to " + finalPosition+"\n";
         }
         else {
             System.out.println(player+ " Rolled a " +  diceRoll + " and landed on " + finalPosition+"\n");
