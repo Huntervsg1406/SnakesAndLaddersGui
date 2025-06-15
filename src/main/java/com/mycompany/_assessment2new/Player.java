@@ -21,7 +21,7 @@ public class Player {
         
     }
 
-    
+    //No commits
     // get set methods to retrieve players colours and position.
 
     public int getPosition() {
