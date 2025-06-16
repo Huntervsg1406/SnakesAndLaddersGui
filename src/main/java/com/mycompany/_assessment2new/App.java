@@ -11,12 +11,21 @@ import javax.swing.SwingUtilities;
  * @author hunte
  */
 public class App {
+    
+    
 
     public static void main(String[] args) {
         //Test commit added by John
         
         SwingUtilities.invokeLater(() -> {
-           new GUI(); 
+           try{
+               new GUI(); 
+           }
+           catch(Exception error){
+               System.err.println("Failed to start " + error.getMessage());
+               error.printStackTrace();
+           }
+           
         });
         
     }

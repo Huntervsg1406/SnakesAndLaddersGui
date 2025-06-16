@@ -28,31 +28,22 @@ public class GUI extends JFrame {
     private JButton loadButton;
     private JButton newGameButton;
     private GameDB gameDB;
+    private GameController gameController;
     
     
     
     public GUI() {
+        gameController = new GameController();
+        initUI();
+        //gameDB.GetDbContents();
         
+    }
+    
+    
+    private void initUI(){
         
-        //mising commits
-        board = new Board();
-        playersetup = new PlayerSetup();
+         
         
-        playersetup.addPlayer(1);
-        playersetup.addPlayer(2);
-        
-        try{
-            //new GameDB().cleanDB();       //debug
-            gameDB = new GameDB();
-        }
-        catch(SQLException error){
-            System.out.println(error.getMessage());
-            JOptionPane.showMessageDialog(rootPane, error.getMessage());
-            
-        }
-        
-        gameDB.GetDbContents(); // console debug
-                
         setTitle("Snakes and Ladders");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,35 +56,50 @@ public class GUI extends JFrame {
         // Initialize components
         
         rollButton = new JButton("Roll Dice!");
-        resultLabel = new JLabel("Click the button to roll!");
+        resultLabel = new JLabel(gameController.startGameMessage(), SwingConstants.CENTER);
         saveButton = new JButton("Save Game");
         loadButton = new JButton("Load Game");
         newGameButton = new JButton("New Game");
         
-
+        
         // Add action
         
         saveButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                saveGame();
-                showControls();
+                gameController.saveGame();
+                JOptionPane.showMessageDialog(rootPane, "Game has been saved");
+                if(gameController.isGameFinished()){
+                    rollButton.setVisible(false);
+                }
             }
         });
         
         loadButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                loadGame();
-                showControls();
+                if(gameController.loadGame()){
+                    resultLabel.setText("Game has loaded. " + gameController.getCurrentPlayerName() +"'s turn");
+                    rollButton.setVisible(true);
+                    resultLabel.setVisible(true);
+                    JOptionPane.showMessageDialog(rootPane, "Game has been loaded");
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane, "No saved game found.");
+                }
             }
         });
         
         newGameButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                newGame();
-                showControls();
+                int confirm = JOptionPane.showConfirmDialog(rootPane,"Start new game?","confirm",JOptionPane.YES_NO_OPTION);
+                if(confirm == JOptionPane.YES_OPTION){
+                    gameController.newGame();
+                    resultLabel.setText(gameController.startGameMessage());
+                    rollButton.setVisible(true);
+                    resultLabel.setVisible(true);
+                }
             }
         });
         
@@ -101,32 +107,25 @@ public class GUI extends JFrame {
         rollButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-        rollDiceFunction();
+        resultLabel.setText(gameController.rollDiceFunction());
+        if(gameController.isGameFinished()){
+            rollButton.setVisible(false);
+            
+        }
         }
         });
         
         
-        
-        
-        JPanel panel = new JPanel();
-        
-        //panel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.lightGray));
-        
-        //panel.add(loadButton.);
-        //panel.add(saveButton);
-        //panel.add(newGameButton);
-        //panel.add(rollButton);
-        //panel.add(resultLabel);
+        //panels
         
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(600, 40);
         buttonPanel.add(loadButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(newGameButton);
-        
-        
         buttonPanel.add(rollButton);
         
+        JPanel panel = new JPanel();
         panel.add(buttonPanel);
         //resultLabel.setSize(150, 80);
         //resultLabel.setBounds(200, 120, 120, 120);
@@ -140,7 +139,7 @@ public class GUI extends JFrame {
     }
     
     
-    
+    /*
     private void showControls(){
         rollButton.setVisible(true);
         resultLabel.setVisible(true);
@@ -201,7 +200,7 @@ public class GUI extends JFrame {
             currentPlayerIndex = (currentPlayerIndex + 1) % playersetup.getPlayers().size();
         }
     }
-    
+    */
     
     
     
