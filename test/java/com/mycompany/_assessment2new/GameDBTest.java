@@ -21,7 +21,7 @@ public class GameDBTest {
    private GameDB db;
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception { //AI helped with this code
         db = new GameDB();
         db.clearSavedGame();
     }
@@ -32,7 +32,7 @@ public class GameDBTest {
      * Test of saveGame method, of class GameDB.
      */
     @Test
-    public void testSaveGame() {
+    public void testSaveGame() { //AI helped with this code
         try {
             db.saveGame(25, 50, 1);
         } catch (Exception e) {
